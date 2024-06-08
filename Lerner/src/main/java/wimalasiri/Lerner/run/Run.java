@@ -12,5 +12,7 @@ public record Run(
     Integer miles,
     Location location
 ) {
-    
+    public Integer getId() {
+        return this.id;
+    }
 }

@@ -16,6 +16,9 @@ public class RunRepository {
         return runs;
     }
 
+    Run findById(Integer id) {
+        return runs.stream().filter(run -> run.getId() == id).findFirst().orElse(null);
+    }
     // When the class is created, this method is called
     @PostConstruct
     public void init(){
