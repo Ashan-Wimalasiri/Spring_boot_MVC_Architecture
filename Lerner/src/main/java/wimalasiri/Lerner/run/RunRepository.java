@@ -12,6 +12,7 @@ public class RunRepository {
     
     private List<Run> runs = new ArrayList<>();
 
+
     List<Run> findAll() {
         return runs;
     }
@@ -19,6 +20,28 @@ public class RunRepository {
     Run findById(Integer id) {
         return runs.stream().filter(run -> run.getId() == id).findFirst().orElse(null);
     }
+
+    public void saveRun(Run run) {
+        runs.add(run);
+    }
+
+    public void updateRun(Run run) {
+        Run existingRun = findById(run.getId());
+        if (existingRun == null) {
+            return;
+        }
+        runs.remove(existingRun);
+        runs.add(run);
+    }
+
+    public void deleteRun(Integer id) {
+        Run existingRun = findById(id);
+        if (existingRun == null) {
+            return;
+        }
+        runs.remove(existingRun);
+    }
+
     // When the class is created, this method is called
     @PostConstruct
     public void init(){
