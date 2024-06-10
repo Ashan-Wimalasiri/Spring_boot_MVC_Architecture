@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
 
 // this is controller in mvc approach
 // This is interface for interating with view
@@ -43,7 +43,7 @@ public class RunController {
 
     @GetMapping("/{id}")
     Run findById(@PathVariable Integer id){
-        Optional<Run> run = Optional.ofNullable(runRepository.findById(id));
+        Optional<Run> run = runRepository.findById(id);
         if (!run.isPresent()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Run not found");
         }
@@ -57,9 +57,9 @@ public class RunController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/updateRun")
-    public void updateRun(@Valid @RequestBody Run run){
-        runRepository.updateRun(run);
+    @PutMapping("/updateRun/{id}")
+    public void updateRun(@RequestBody Run run,@PathVariable Integer id){
+        runRepository.updateRun(run, id);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -67,5 +67,16 @@ public class RunController {
     public void deleteRun(@PathVariable Integer id){
         runRepository.deleteRun(id);
     }
-    
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/count")
+    public Integer count(){
+        return runRepository.count().orElse(0);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/saveAll")
+    public void saveAll(@RequestBody List<Run> runs){
+        runRepository.saveAll(runs);
+    }
 }

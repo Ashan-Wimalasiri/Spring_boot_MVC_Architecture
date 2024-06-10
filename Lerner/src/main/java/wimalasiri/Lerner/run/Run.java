@@ -13,7 +13,7 @@ public record Run(
     Integer id,
     String title,
     LocalDateTime startedOn,
-    LocalDateTime endedOn,
+    LocalDateTime completedOn,
     //validation contraint
     @Positive
     Integer miles,
